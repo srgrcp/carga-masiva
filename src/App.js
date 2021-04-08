@@ -15,7 +15,7 @@ function App() {
       let formData = new FormData()
       formData.append('excelFile', file, 'file.xlsx')
       
-      axios.post('http://localhost:5000/api/ms-user/v1/user/mass-registration', formData)
+      axios.post('https://dev.movet.co/api/ms-user/v1/user/mass-registration', formData)
       .then(data => data.data)
       .then(data => console.log(data))
   }, [file])
