@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
 function App() {
+
+  const [file, setFile] = useState()
+
+  const changeFile = e => {
+      if (!e.target.files) return
+      setFile(e.target.files[0])
+  }
+
+  useEffect(() => {
+      if (!file) return
+      let formData = new FormData()
+      formData.append('excelFile', file, 'file.xlsx')
+      
+      axios.post('http://localhost:5000/api/ms-user/v1/user/mass-registration', formData)
+      .then(data => data.data)
+      .then(data => console.log(data))
+  }, [file])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+        <div>
+            <input type="file" onChange={changeFile} />
+        </div>
+    )
 }
 
-export default App;
+export default App
